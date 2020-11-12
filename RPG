@@ -1,0 +1,475 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+#include <time.h>
+
+/* Ideias futuras:
+Criação de inimigos
+CLASSES (Mago, Ladino, Guerreiro)
+ATACAR OU FUGIR *Sistema de escolhas* (depende das CLASSES)
+HABILIDADES (Depende das classes)
+NPC's (Aquisição de itens)
+ITENS (Utilizaveis durante o jogo) 
+*/
+
+
+// --------------------------- PROTÓTIPOS DAS FUNÇÕES ---------------------------
+
+//Funções para print, chamadas e preenchimento de variáveis
+int menuInteracao ();	
+
+// Funções rand que rodam números aleatórios para testes 
+int rolagemDado();	
+int mapaRand();
+
+// Funções que alteram características do personagens, como dano na vida do monstro e alteração de atributos
+//void danoMonstro();	 			    // Altera o dano diretamente na vida do monstro
+//void danoPersonagem();
+void printAtributosPersonagem();	// Printa os atributos atuais do personagem 
+void printAtributosMonstro();		// Printa os atributos atuais do monstro
+//void alteraAtributosPersonagem();	// Altera os atributos do personagem, como HP e Dano
+
+// Funções que realizam teste nas inputs, impedem que o usuário "quebre" o programa 
+//int stringTamanhoPersonagem ();     // Impede que o usuário coloque um nome maior que 20 letras
+//int caractereEmVariavelInt ();	  // impede o usuário de inserir caracteres maiores que o aceitável 
+
+// --------------------------- ESTRUTURAS DE DADOS --------------------------- 
+
+typedef struct raca{ 
+    float forca;
+    float hp;						// Estrutura que define a raca
+    float defesa;
+    float esquiva;
+} raca;
+
+typedef struct persona{ 
+    char nome[21];
+    int xp;
+    int level;				// Estrutura que define o personagem
+	raca raca;
+} persona; 
+
+typedef struct enemies{
+    char  nome[31]; 
+    float forca;	
+    float hp;						// Estrutura que define os inimigos 
+    float defesa;
+    float esquiva;
+} enemies;
+
+// --------------------------- VARIÁVEIS GLOBAIS ---------------------------
+int i;
+
+int main(){
+    setlocale(LC_ALL, "Portuguese");
+
+// Alimentação das estruturas de inimigos 
+
+// Atributos montros ilha
+enemies inimigosIlha[2];
+
+inimigosIlha[0].nome[31]        = "Carangueijo";
+inimigosIlha[0].forca 		    = 5;
+inimigosIlha[0].hp    		    = 25;
+inimigosIlha[0].defesa		    = 10;
+inimigosIlha[0].esquiva		    = 20;
+
+inimigosIlha[0].nome[31]        = "Carangueijo";
+inimigosIlha[1].forca			= 5;
+inimigosIlha[1].hp				= 50;
+inimigosIlha[1].defesa			= 25;
+inimigosIlha[1].esquiva			= 15;
+
+// Atributos montros deserto
+enemies inimigosDeserto[2];
+
+inimigosDeserto[0].nome[31]        = "Escorpião Gigante";		
+inimigosDeserto[0].forca   		= 5;
+inimigosDeserto[0].hp      		= 25;
+inimigosDeserto[0].defesa  		= 20;
+inimigosDeserto[0].esquiva 		= 5;
+
+inimigosDeserto[1].nome[31]        = "Mago das Areias";
+inimigosDeserto[1].forca   		= 5;
+inimigosDeserto[1].hp      		= 25;
+inimigosDeserto[1].defesa  		= 20;
+inimigosDeserto[1].esquiva 		= 5;
+  
+// Atributos monstros floresta
+enemies inimigosFloresta[2];
+
+inimigosFloresta[0].nome[31]    = "";
+inimigosFloresta[0].forca   	= 5;
+inimigosFloresta[0].hp      	= 25;
+inimigosFloresta[0].defesa  	= 20;
+inimigosFloresta[0].esquiva 	= 20;
+
+inimigosFloresta[0].nome[31]    = "Dragão Dourado";
+inimigosFloresta[1].forca   	= 5;
+inimigosFloresta[1].hp      	= 50;
+inimigosFloresta[1].defesa  	= 45;
+inimigosFloresta[1].esquiva 	= 25;
+    
+// ANÃO ATRIBUTOS
+raca anao;
+anao.forca   = 8;
+anao.hp      = 8;
+anao.defesa  = 10;
+anao.esquiva = 4;
+        
+// ELFO ATRIBUTOS
+raca elfo;
+elfo.forca    = 6;
+elfo.hp       = 6; 
+elfo.defesa   = 8;
+elfo.esquiva  = 10;
+        
+// HUMANOS ATRIBUTOS 
+raca humano;
+humano.forca   = 8;
+humano.hp      = 8;
+humano.defesa  = 8;
+humano.esquiva = 6;
+            
+// ATRIBUTOS PERSONAGEM
+persona personagem;
+personagem.xp = 100;
+personagem.level = 1; 
+	
+
+// VARIÁVEIS PARA O MAIN
+int     escolhaRaca = 0;
+int     recebeDado = 0;
+int     mapa = 0;
+int     ataqueOuDefesa = 0;
+int     menuInteracao = 0;
+float   multiplicadorDano; 		  	  // Multiplica o dano com base no dado
+int     countInimigo = 0;           // Variável utilizada para contabilizar qual inimigo está na luta
+
+// PONTEIROS PARA MANIPULAÇÃO DAS STRUCTS
+enemies * ptrInimigos; 
+raca    * ptrRaca; 
+persona * ptrPersona;
+int     * ptrEscolhaRaca = &escolhaRaca; 
+
+    printf(" Escolha seu nome para essa aventura!!\n\n");
+    gets( personagem.nome);
+
+	printf("\n\n Bem vindo a Deltora, nobre %s! \n\n Escolha sua raca!\n\n", personagem.nome);
+
+	printf(" (1) HUMANO\n Forca = %.f \n HP = %.f \n Defesa = %.f \n Esquiva = %.f \n\n", humano.forca, humano.hp, humano.defesa, humano.esquiva);
+	printf(" (2) ANAO\n Forca = %.f \n HP = %.f \n Defesa = %.f \n Esquiva = %.f \n\n", anao.forca, anao.hp, anao.defesa, anao.esquiva);
+	printf(" (3) ELFO\n Forca = %.f \n HP = %.f \n Defesa = %.f \n Esquiva = %.f \n\n", elfo.forca, elfo.hp, elfo.defesa, elfo.esquiva);
+
+    do{
+      printf(" Digite sua escolha: (1), (2) ou (3)\n");
+      scanf(" %d", &escolhaRaca);
+      
+        if (escolhaRaca <= 0 || escolhaRaca > 3)
+            printf("\n\n Valor inválido\n Somente valores os (1)(2)(3) são aceitos \n Digite novamente...\n\n");
+      }  while (escolhaRaca <= 0 || escolhaRaca > 3);
+
+      // Alimenta a struct raca dentro de personagem e o ponteiro para futuras manipulações   
+      if (escolhaRaca == 1){
+			personagem.raca = humano; 
+            ptrRaca = &humano;
+    	}
+		    else 
+	            if (escolhaRaca == 2){
+			        personagem.raca = anao;
+			        ptrRaca = &anao; 
+		        }
+		            else	
+		                if (escolhaRaca == 3){
+							personagem.raca = elfo;
+			                ptrRaca = &elfo;
+		                }
+		
+    system("cls");
+    printf(" Seu personagem, %s\n\n", personagem.nome);
+    printAtributosPersonagem(*ptrRaca, escolhaRaca); // Chama os atributos na tela                		
+    printf("\n");
+	system("pause");
+	system("cls");		
+
+    // Sorteia o mapa
+	mapa = mapaRand();
+
+	switch(mapa){
+	    case 1:	
+			if (inimigosIlha[countInimigo].hp <= 0){ 
+              countInimigo++;									// Testa se o inimigo já morreu e envia para o próximo inimigo dentro do mapa
+            }
+            
+            ptrInimigos = &inimigosIlha[countInimigo];      	// Ponteiro que aponta para o inimigo deste mapa
+            
+            // Função que chama texto deste mapa
+            textoMapa(mapa);
+            printf("%s", inimigosIlha[countInimigo].nome);    	                            // Função que chama texto deste mapa
+            printAtributosMonstro(ptrInimigos, countInimigo);
+
+            do {
+                printf(" Quem irá golpear? \n\n O dado foi lançado!\n\n");
+                    ataqueOuDefesa = rolagemDado();
+			    printf(" Dado: %d\n\n", ataqueOuDefesa);
+			    
+                // Caso o dado retorne acima de 10, você atacará o monstro 
+			    if (ataqueOuDefesa >= 10){
+				    
+                    printf(" Você está com sorte!\n Partiu na dianteira e atacou!\n\nAgora vamos lançar o dado e ver o tamanho da porrada!\n\n");
+
+				// Entrada de dados no menu interação (Rolar dado, mostrar atributos ou sair do jogo)
+                do{
+                    menuInteracao = menuInteracaoBatalha();
+                    if (menuInteracao == -1){
+                        printAtributosPersonagem(*ptrRaca, escolhaRaca);
+                        system("pause");
+                        system("cls");
+                    } 
+                    else
+                    if (menuInteracao == -2){
+                        printAtributosMonstro(ptrInimigos, countInimigo);
+                        system("pause");
+                        system("cls");
+                    }
+                    else
+                    if (menuInteracao == -3){
+                        system("cls");
+                        printf("GG!\n");
+                        system("pause");
+                        return 0;
+                    }
+                    else {
+                        recebeDado = menuInteracao;
+                    }     
+                } while (menuInteracao == -1 || menuInteracao == -2);
+
+				printf(" O dado lançado!\n Valor: %d\n\n", recebeDado);
+                    system("pause");
+                    system("cls");
+
+				if (recebeDado == 1){
+					printf(" Ataque mal sucedido!");
+				}   
+				else			
+			        if (recebeDado >= 2 && recebeDado <= 9){
+					    inimigosIlha[countInimigo].hp = inimigosIlha[countInimigo].hp - (ptrRaca->forca * 1);
+                        printf(" Você deu %f de dano\n\n", (ptrRaca->forca * 1));
+				    } 
+				    else 			
+				        if (recebeDado >= 10 && recebeDado <= 14){
+			    	        inimigosIlha[countInimigo].hp = inimigosIlha[countInimigo].hp - (ptrRaca->forca * 1.5);
+                            printf(" Você deu %f de dano\n\n", (ptrRaca->forca * 1.5));
+                   		}
+				        else 			
+				            if (recebeDado >= 15 && recebeDado <= 19){
+					            inimigosIlha[countInimigo].hp = inimigosIlha[countInimigo].hp - (ptrRaca->forca * 2);
+                                printf(" Você deu %f de dano\n\n", (ptrRaca->forca * 2));							   
+        		            }	   
+				            else 			
+				                if (recebeDado == 20){
+					                printf(" CRITICAL HIT!!\n\n");
+                                    inimigosIlha[countInimigo].hp = inimigosIlha[countInimigo].hp - (ptrRaca->forca * 2.5);
+                                    printf(" Você deu %f de dano\n\n", (ptrRaca->forca * 2.5));
+                                 }
+
+                system("pause");
+                // Printa os atributos do monstro
+                printf("%s", inimigosIlha[countInimigo].nome); 
+				printAtributosMonstro(ptrInimigos, countInimigo);
+                system("pause");
+                system("cls");
+
+				}
+				
+                // Caso o dado retorne menos de 10, o monstro ataca você  
+                if (ataqueOuDefesa < 10){
+					printf(" Você moscou!\n\n Role o dado para vermos o tamanho da surra\n\n");
+
+				// Entrada de dados no menu interação (Rolar dado, mostrar atributos ou sair do jogo)
+                  do{
+                    menuInteracao = menuInteracaoBatalha();
+                    if (menuInteracao == -1){
+                        printAtributosPersonagem(*ptrRaca, escolhaRaca);
+                        system("pause");
+                        system("cls");
+                    } 
+                    else
+                    if (menuInteracao == -2){
+                        printAtributosMonstro(ptrInimigos, countInimigo);
+                        system("pause");
+                        system("cls");
+                    }
+                    else
+                    if (menuInteracao == -3){
+                        system("cls");
+                        printf("GG!\n");
+                        system("pause");
+                        return 0;
+                    }
+                    else {
+                        recebeDado = menuInteracao;
+                    }     
+                } while (menuInteracao == -1 || menuInteracao == -2);
+
+				printf("\n O dado foi lançado!\n Valor: %d\n\n", recebeDado);
+                                
+                if (recebeDado == 1){
+                    printf("\n Bah, tu encarou um desafio muito além do que podia, mais sorte na próxima\n\n Game Over! \n Hasta la vista! \n Arrivederci \n ");
+					system("pause");
+				    return 0;
+				} 
+				else	
+				if (recebeDado >= 2 && recebeDado <= 9){
+                    multiplicadorDano = 2;
+												 
+				} 
+				else 			
+				if (recebeDado >= 10 && recebeDado <= 14){
+                        multiplicadorDano = 1.6;
+													
+				}
+				else 			
+				if (recebeDado >= 15 && recebeDado <= 19){
+                        multiplicadorDano = 1.3;
+                    								    
+                }
+                if (recebeDado == 20){
+				    printf(" Sortudo maldito!\n\n Você desviou do ataque!");
+				}
+				else		
+                
+                // Chama os atributos na tela 
+				printAtributosPersonagem(*ptrRaca, escolhaRaca); 
+                system("pause");
+                system("cls");                }            
+
+			} while(inimigosIlha[countInimigo].hp >= 0);
+
+		    break;
+
+		case 2:
+			ptrInimigos = &inimigosDeserto[countInimigo]; 
+			printAtributosMonstro(ptrInimigos, countInimigo);
+            textoMapa(mapa);
+                printAtributosMonstro(ptrInimigos, countInimigo);
+                printf(" Os dados foram lançados!\n\n Quem dará o primeiro golpe?\n\n");
+		break;
+
+		case 3:
+			ptrInimigos = &inimigosFloresta[countInimigo]; 
+			printAtributosMonstro(ptrInimigos, countInimigo);
+            textoMapa(mapa);
+                printAtributosMonstro(ptrInimigos, countInimigo);
+                printf(" Os dados foram lançados!\n\n Quem dará o primeiro golpe?\n\n");
+		break;	
+    
+        default:
+            printf ("Opa, você está em terras não mapeadas\n");
+            break;
+    }
+
+system("cls");
+system("pause");
+return 0;
+}
+
+
+//------------------------------------- Corpo das funções de menu
+int menuInteracaoBatalha (){
+
+    int interacao = 0;
+    int ataqueOuDefesa = 0;
+
+	do {
+		printf(" Digite:\n (1) para rolar o dado\n (2) Exibir atributos\n (3) Exibir os atributos do monstro \n (4) para sair\n");
+		scanf(" %d", &interacao);
+											
+			if (interacao > 4 || interacao <= 0){
+				printf("\n\n Valor inválido\n Somente valores os (1)(2)(3)(4) são aceitos \n Digite novamente...\n\n");
+			}
+	}while(interacao > 4 || interacao <= 0);
+
+	// Teste para averiguar a escolha do usuário (Rodar o dado, exibir atributos ou sair) 
+		if (interacao == 1){                      
+			ataqueOuDefesa = rolagemDado();
+			return ataqueOuDefesa; 
+		} 
+		else 
+		if(interacao == 2){
+			return -1;  
+		}
+        else
+        if(interacao == 3){
+			return -2;  
+		}
+		else
+			return -3;
+}
+
+// ------------------------------------- Corpo das funções PRINT
+
+void textoMapa(int numMapa){
+    
+    if (numMapa == 1){
+        printf(" Você está na Greed Island, prepare-se para lutar!\n");
+		printf(" Não se engane com as aparências, a Ilha é rodeada das mais perversas criaturas prontas para te devorar!\n\n O que é isso? Uma criatura acaba de aparecer na sua frente!\n\n");
+    }
+    else
+    if (numMapa == 2)
+    {
+        printf(" Você está no Desert Of BaBooine, prepare-se para lutar!\n"); 
+        printf(" O Deserto é árido e extremamente seco você se sente sozinho no meio de tanta areia, você já não consegue ver por onde veio e só lhe resta ir para frente. Caminhando a esmo você nota uma criatura vindo na sua direção!\n\n");
+    }
+    else
+    {
+        printf(" Você está em Brokilon, prepare-se para lutar!\n"); 
+		printf(" Entrando na Floresta você nota que quanto mais avança mais escuro e mais fechado o mato fica, as árvores em volta parecem que estão se fechando por cima de você. \n\n Você corre mas é surpreendido por uma criatura de fora dos arbustos!\n\n");
+    }
+      
+}
+
+void printAtributosPersonagem(raca atributo, int escolhaRaca){
+
+	if (escolhaRaca == 1){
+        printf(" HUMANO\n Forca = %.f \n HP = %.f \n Defesa = %.f \n Esquiva = %.f \n", atributo.forca, atributo.hp, atributo.defesa, atributo.esquiva);
+	}
+	else
+    if (escolhaRaca == 2){
+		    printf(" ANAO\n Forca = %.f \n HP = %.f \n Defesa = %.f \n Esquiva = %.f \n", atributo.forca, atributo.hp, atributo.defesa, atributo.esquiva);
+    }
+	else 
+	if (escolhaRaca == 3){
+        printf(" ELFO\n Forca = %.f \n HP = %.f \n Defesa = %.f \n Esquiva = %.f \n", atributo.forca, atributo.hp, atributo.defesa, atributo.esquiva);
+	}
+}
+
+void printAtributosMonstro(enemies * atributoInimigo, int countInimigo){
+
+	printf(" Atributo do monstro!\n");
+	printf(" Forca = %.f\n HP = %.f\n Defesa = %.f\n Esquiva = %.f\n\n", atributoInimigo[countInimigo].forca, atributoInimigo[countInimigo].hp, atributoInimigo[countInimigo].defesa, atributoInimigo[countInimigo].esquiva);	
+}
+
+// ------------------------------------- Corpo das funções RAND
+int rolagemDado(){
+    int numeroDado;
+    srand(time(NULL));
+    
+    do{   
+       numeroDado = rand() % 21;
+    } while (numeroDado == 0);
+
+    return 14;
+}
+
+int mapaRand(){
+    int numeroDado;
+    srand(time(NULL));
+
+    do{   
+       numeroDado = rand() % 4;
+    } while (numeroDado == 0);
+
+    return 1;
+}
