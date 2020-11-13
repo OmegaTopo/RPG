@@ -860,7 +860,7 @@ int rolagemDado(){
        numeroDado = rand() % 21;
     } while (numeroDado == 0);
 
-    return 14;
+    return numeroDado;
 }
 
 int mapaRand(){
@@ -871,5 +871,5 @@ int mapaRand(){
        numeroDado = rand() % 4;
     } while (numeroDado == 0);
 
-    return 1;
+    return numeroDado;
 }
