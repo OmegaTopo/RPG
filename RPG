@@ -77,7 +77,7 @@ inimigosIlha[0].hp    		    = 25;
 inimigosIlha[0].defesa		    = 10;
 inimigosIlha[0].esquiva		    = 20;
 
-inimigosIlha[0].nome[31]        = "Monstro do Pântano";
+inimigosIlha[0].nome[31]        = "Monstro do Pantano";
 inimigosIlha[1].forca			= 5;
 inimigosIlha[1].hp				= 50;
 inimigosIlha[1].defesa			= 25;
@@ -86,7 +86,7 @@ inimigosIlha[1].esquiva		    = 15;
 // Atributos montros deserto
 enemies inimigosDeserto[2];
 
-inimigosDeserto[0].nome[31]     = "Escorpião Gigante";		
+inimigosDeserto[0].nome[31]     = "Escorpiao Gigante";		
 inimigosDeserto[0].forca   		= 5;
 inimigosDeserto[0].hp      		= 25;
 inimigosDeserto[0].defesa  		= 20;
@@ -107,7 +107,7 @@ inimigosFloresta[0].hp      	= 25;
 inimigosFloresta[0].defesa  	= 20;
 inimigosFloresta[0].esquiva 	= 20;
 
-inimigosFloresta[0].nome[31]    = "Dragão Dourado";
+inimigosFloresta[0].nome[31]    = "Dragao Dourado";
 inimigosFloresta[1].forca   	= 5;
 inimigosFloresta[1].hp      	= 50;
 inimigosFloresta[1].defesa  	= 45;
@@ -167,7 +167,7 @@ int     * ptrEscolhaRaca = &escolhaRaca;
       
                 if (escolhaRaca <= 0 || escolhaRaca > 3)
                 {
-                    printf("\n\n Valor inválido\n Somente valores os (1)(2)(3) são aceitos \n Digite novamente...\n\n");
+                    printf("\n\n Valor invalido\n Somente valores os (1)(2)(3) são aceitos \n Digite novamente...\n\n");
                 }
                     
         } while (escolhaRaca <= 0 || escolhaRaca > 3);
@@ -224,13 +224,13 @@ int     * ptrEscolhaRaca = &escolhaRaca;
 
             do 
             {
-          	    printf(" Quem irá golpear? \n\n O dado foi lançado!\n\n");
+          	    printf(" Quem ira golpear? \n\n O dado foi lançado!\n\n");
           	    printf(" Dado: %d\n\n", ataqueOuDefesa = rolagemDado());
 			    
                 // Caso o dado retorne acima de 10, você atacará o monstro 
                 if (ataqueOuDefesa >= 10)
                 {
-                    printf(" Você está com sorte!\n Partiu na dianteira e atacou!\n\nAgora vamos lançar o dado e ver o tamanho da porrada!\n\n");
+                    printf(" Você esta com sorte!\n Partiu na dianteira e atacou!\n\nAgora vamos lançar o dado e ver o tamanho da porrada!\n\n");
                 
                     // Entrada de dados no menu interação (Rolar dado, mostrar atributos ou sair do jogo)
                     do
@@ -413,13 +413,13 @@ int     * ptrEscolhaRaca = &escolhaRaca;
             // Entrada de dados no menu interação (Rolar dado, mostrar atrib0tos ou sair do jogo)
             do
             {
-                printf(" Quem irá golpear? \n\n O dado foi lançado!\n\n");
+                printf(" Quem ira golpear? \n\n O dado foi lançado!\n\n");
 			    printf(" Dado: %d\n\n", ataqueOuDefesa = rolagemDado());
 
                 // Caso o dado retorne acima de 10, você atacará o monstro
                 if (ataqueOuDefesa >= 10)
             {
-				printf(" Você está com sorte!\n Partiu na dianteira e atacou!\n\nAgora vamos lançar o dado e ver o tamanho da porrada!\n\n");
+				printf(" Você esta com sorte!\n Partiu na dianteira e atacou!\n\nAgora vamos lançar o dado e ver o tamanho da porrada!\n\n");
 
 			    // Entrada de dados no menu interação (Rolar dado, mostrar atributos ou sair do jogo)
                 do
@@ -537,7 +537,7 @@ int     * ptrEscolhaRaca = &escolhaRaca;
 
                     if (recebeDado == 1)
                     {
-                        printf("\n Bah, tu encarou um desafio muito além do que podia, mais sorte na próxima\n\n Game Over! \n Hasta la vista! \n Arrivederrci \n ");
+                        printf("\n Bah, tu encarou um desafio muito alem do que podia, mais sorte na próxima\n\n Game Over! \n Hasta la vista! \n Arrivederrci \n ");
                         system("pause");
                         return 0;
                     }
@@ -598,13 +598,13 @@ int     * ptrEscolhaRaca = &escolhaRaca;
 
             do 
             {
-                printf(" Quem irá golpear? \n\n O dado foi lançado!\n\n");
+                printf(" Quem ira golpear? \n\n O dado foi lançado!\n\n");
                 printf(" Dado: %d\n\n", ataqueOuDefesa = rolagemDado());
 
                 // Caso o dado retorne acima de 10, você atacará o monstro
 			    if (ataqueOuDefesa >= 10)
                 {
-				    printf(" Você está com sorte!\n Partiu na dianteira e atacou!\n\nAgora vamos lançar o dado e ver o tamanho da porrada!\n\n");
+				    printf(" Você esta com sorte!\n Partiu na dianteira e atacou!\n\nAgora vamos lançar o dado e ver o tamanho da porrada!\n\n");
 					
                     // Entrada de dados no menu interação (Rolar dado, mostrar atributos ou sair do jogo)
                     do
@@ -722,7 +722,7 @@ int     * ptrEscolhaRaca = &escolhaRaca;
 
                     if (recebeDado == 1)
                     {
-                        printf("\n Bah, tu encarou um desafio muito além do que podia, mais sorte na próxima\n\n Game Over! \n Hasta la vista! \n Arrivederrci \n ");
+                        printf("\n Bah, tu encarou um desafio muito alem do que podia, mais sorte na próxima\n\n Game Over! \n Hasta la vista! \n Arrivederrci \n ");
                         system("pause");
                         return 0;
                     }
@@ -767,7 +767,7 @@ int     * ptrEscolhaRaca = &escolhaRaca;
 		break;	
     
         default:
-            printf ("Opa, você está em terras não mapeadas\n");
+            printf ("Opa, voce esta em terras nao mapeadas\n");
             break;
     }
 
@@ -787,7 +787,7 @@ int menuInteracaoBatalha (){
 		scanf(" %d", &interacao);
 											
 			if (interacao > 4 || interacao <= 0){
-				printf("\n\n Valor inválido\n Somente valores os (1)(2)(3)(4) são aceitos \n Digite novamente...\n\n");
+				printf("\n\n Valor invalido\n Somente valores os (1)(2)(3)(4) são aceitos \n Digite novamente...\n\n");
 			}
 	}while(interacao > 4 || interacao <= 0);
 
@@ -813,18 +813,18 @@ int menuInteracaoBatalha (){
 void textoMapa(int numMapa){
     
     if (numMapa == 1){
-        printf(" Você está na Greed Island, prepare-se para lutar!\n");
-		printf(" Não se engane com as aparências, a Ilha é rodeada das mais perversas criaturas prontas para te devorar!\n\n O que é isso? Uma criatura acaba de aparecer na sua frente!\n\n");
+        printf(" Você esta na Greed Island, prepare-se para lutar!\n");
+		printf(" Não se engane com as aparencias, a Ilha é rodeada das mais perversas criaturas prontas para te devorar!\n\n O que é isso? Uma criatura acaba de aparecer na sua frente!\n\n");
     }
     else
     if (numMapa == 2)
     {
-        printf(" Você está no Desert Of BaBooine, prepare-se para lutar!\n"); 
+        printf(" Você esta no Desert Of BaBooine, prepare-se para lutar!\n"); 
         printf(" O Deserto é árido e extremamente seco você se sente sozinho no meio de tanta areia, você já não consegue ver por onde veio e só lhe resta ir para frente. Caminhando a esmo você nota uma criatura vindo na sua direção!\n\n");
     }
     else
     {
-        printf(" Você está em Brokilon, prepare-se para lutar!\n"); 
+        printf(" Voce esta em Brokilon, prepare-se para lutar!\n"); 
 		printf(" Entrando na Floresta você nota que quanto mais avança mais escuro e mais fechado o mato fica, as árvores em volta parecem que estão se fechando por cima de você. \n\n Você corre mas é surpreendido por uma criatura de fora dos arbustos!\n\n");
     }
       
