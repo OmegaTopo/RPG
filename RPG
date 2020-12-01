@@ -11,13 +11,13 @@
 struct classAbility {
     int   inteligencia;
     int   magia;
-    int   espirito;
+    int   espirito; 
 };
 
 struct raceAbility {
     int   hp;
     int   forca;
-    int   esquiva;
+    int   esquiva;  
 };
 
 struct persona {
@@ -25,7 +25,7 @@ struct persona {
     int     xp;
     int     nivel;
     struct  raceAbility raca;
-    struct  classAbility classe;
+    struct  classAbility classe; 
 };
 
 struct enemies {
@@ -36,7 +36,7 @@ struct enemies {
     int     esquiva;
     int     magia;
 };
-
+ 
 int main(){
 
 // Declaração de variáveis para a personagem
@@ -47,12 +47,12 @@ struct persona *ptr_personagem = &personagem;
 struct raceAbility anao;
 struct raceAbility *ptr_anao;
 ptr_anao = &anao;
-
+        
 // Declaração de variáveis para a raca elfo
 struct raceAbility elfo;
 struct raceAbility *ptr_elfo;
 ptr_elfo = &elfo;
-
+        
 // Declaração de variáveis para a raca humano
 struct raceAbility humano;
 struct raceAbility * ptr_humano;
@@ -75,20 +75,21 @@ ptr_ladino = &ladino;
 
 // Declaração de variáveis do main
 int quantInimigos = 0;
-int i = 0;
+int i = 0; 
 int exit = 0;
 int menuEscolha = 0;
 int sorteioInimigo = 0;
 int dado = 0;
 
+FILE *arquivo = fopen("ficha.txt", "w");
+    char ler;
+
+    ler = gets(arquivo);
+
 
 // Declaração de variáveis para inimigos
 struct enemies inimigos[4];
 
-    FILE *arquivo = fopen("ficha.txt", "w+b");
-    char ler;
-
-    ler = gets(arquivo);
 
     // Criação e inicialização do personagem
     nomePersonagem(&personagem);
@@ -101,21 +102,21 @@ struct enemies inimigos[4];
     // Criação e inicialização de inimigos
     printf("\n----------------------- CRIACAO DE INIMIGOS -----------------------\n");
     printf("Bem vindo ao RPG Deltora, nessa parte iniciaremos os inimigos. \n");
-    printf("O status de ataque, defesa e outros atributos serao adicionados nesta area. Serão 4 inimigos no total.\n\n");
+    printf("O status de ataque, defesa e outros atributos serao adicionados nesta area. Serão 8 inimigos no total.\n\n");
 
     printf("\nAgora vamos preencher os status dos inimigos.\n");
 
     for (i = 0; i < 4; i++)
-    {
-        do
-        {
+    {   
+        do 
+        {   
             printf("\n------ Inimigo %d\n", i+1);
             printf("\nNome: ");
             scanf("%s", inimigos[i].nomeInimigo);
             setbuf(stdin, NULL);
 
                 if (strlen(inimigos[i].nomeInimigo) > 30)
-                {
+                {   
                     printf("\n\nValor Invalido\nMaximo 30 caracteres\n\nRepita...\n\n");
                 }
         } while (strlen(inimigos[i].nomeInimigo) > 30);
@@ -146,13 +147,13 @@ struct enemies inimigos[4];
     printf("Voce acaba de bater de frente com seu inimigo!!\n\n");
 
     sorteioInimigo = randInimigos(4);
-
+    
     printAtributosInimigos(&inimigos, sorteioInimigo);
     system("pause");
     system("cls");
 
-    do
-    {
+    do 
+    {   
         printf("Escolha sua ação: \n");
         menuEscolha = menuInteracaoBatalha();
 
@@ -165,13 +166,13 @@ struct enemies inimigos[4];
         }
 
         //if (menuEscolha == 2){}
-
-
+        
+        
         system("pause");
         system("cls");
     } while (personagem.raca.hp > 0 || inimigos[sorteioInimigo].hp > 0);
-
-
+    
+        
 
     if (personagem.raca.hp <= 0)
         printf("Você morreu!");
@@ -179,29 +180,27 @@ struct enemies inimigos[4];
     if (inimigos[sorteioInimigo].hp <= 0)
         printf("Derrotou seu inimigo!\n");
 
-    upaPersonagem(&personagem);
+    upaPersonagem(&personagem);        
 
     fclose(arquivo);
-
     system("pause");
-
 return 0;
 }
 
-// --------------------------------- CORPO DAS FUNÇÕES
+// --------------------------------- CORPO DAS FUNÇÕES 
 
 // Funções para alimentação dos atributos da personagem
 void nomePersonagem(struct persona *personagem)
-{
+{   
     system("cls");
     printf("\n\n----------------------- CRIACAO DE PERSONAGEM -----------------------\n\n");
-    do
+    do 
     {
         printf("Insira o nome do seu personagem: ");
         scanf("%s", personagem->nomePersonagem);
 
             if (strlen(personagem->nomePersonagem) > 30)
-            {
+            {   
                 system("cls");
                 printf("\n\nValor Invalido\nMaximo 30 caracteres\n\nRepita...\n\n");
             }
@@ -214,22 +213,22 @@ void nomePersonagem(struct persona *personagem)
 }
 
 void escolhaRacaPersonagem(struct persona *personagem, struct raceAbility *anao, struct raceAbility *elfo, struct raceAbility *humano)
-{
-    // AAtributos para anões
+{   
+    // AAtributos para anões 
     anao->forca             = 18;
     anao->hp                = 22;
     anao->esquiva           = 8;
 
     // Atributos para elfos
     elfo->forca             = 17;
-    elfo->hp                = 17;
+    elfo->hp                = 17; 
     elfo->esquiva           = 14;
 
     //Atributos para humanos
     humano->forca           = 17;
     humano->hp              = 17;
     humano->esquiva         = 16;
-
+    
     int escolhaRaca = 0;
 
 	printf("(1) ANAO  \nForca = %d \nHP = %d  \nEsquiva = %d  \n\n", anao->forca, anao->hp, anao->esquiva);
@@ -240,24 +239,24 @@ void escolhaRacaPersonagem(struct persona *personagem, struct raceAbility *anao,
         {
             printf("Digite sua escolha: (1), (2) ou (3)\n");
             scanf(" %d", &escolhaRaca);
-
+      
                 if (escolhaRaca <= 0 || escolhaRaca > 3)
                 {
                     printf("\n\nValor invalido\nSomente valores os (1)(2)(3) sao aceitos \nDigite novamente...\n\n");
                 }
-
+                    
         } while (escolhaRaca <= 0 || escolhaRaca > 3);
 
         if (escolhaRaca == 1)
-        {
+        {			
             personagem->raca = *anao;
         }
-		    else
+		    else 
                 if (escolhaRaca == 2)
                 {
                    personagem->raca = *elfo;
                 }
-		            else
+		            else	
                         if (escolhaRaca == 3)
                         {
                             personagem->raca = *humano;
@@ -269,6 +268,8 @@ void escolhaRacaPersonagem(struct persona *personagem, struct raceAbility *anao,
 
 void escolhaClassePersonagem(struct persona *personagem, struct classAbility *guerreiro, struct classAbility *mago, struct classAbility *ladino)
 {
+    char *nomeClasse[30];
+    char *ptr_nomeClasse = &nomeClasse;
     int escolhaClasse = 0;
 
     guerreiro->inteligencia  = 18;
@@ -282,48 +283,49 @@ void escolhaClassePersonagem(struct persona *personagem, struct classAbility *gu
     ladino->inteligencia     = 24;
     ladino->magia            = 18;
     ladino->espirito         = 6;
-
+    
     printf("(1) Guerreiro \nInteligencia = %d \nMagia = %d  \nEspirito = %d  \n\n", guerreiro->inteligencia, guerreiro->magia, guerreiro->espirito);
     printf("(2) Mago      \nInteligencia = %d \nMagia = %d  \nEspirito = %d  \n\n", mago->inteligencia, mago->magia, mago->espirito);
     printf("(3) Ladino    \nInteligencia = %d \nMagia = %d  \nEspirito = %d  \n\n", ladino->inteligencia, ladino->magia, ladino->espirito);
-
+	
 
         do
         {
             printf("Digite sua escolha: (1), (2) ou (3)\n");
             scanf(" %d", &escolhaClasse);
-
+      
                 if (escolhaClasse <= 0 || escolhaClasse > 3)
                 {
                     printf("\n\nValor invalido\nSomente valores os (1)(2)(3) sao aceitos \nDigite novamente...\n\n");
                 }
-
+                    
         } while (escolhaClasse <= 0 || escolhaClasse > 3);
 
+
         if (escolhaClasse == 1)
-        {
+        {			
             personagem->classe = *guerreiro;
         }
-		    else
+		    else 
                 if (escolhaClasse == 2)
                 {
                    personagem->classe = *mago;
                 }
-		            else
+		            else	
                         if (escolhaClasse == 3)
                         {
                             personagem->classe = *ladino;
                         }
 
-        system("cls");
+        system("cls");                
 }
 
 // Funções para printar os atributos do inimigo
 void printAtributosInimigos (struct enemies *inimigos, int count)
 {
     printf("%s \nForca: %d | HP: %d | Defesa: %d | Esquiva: %d | Magia: %d\n\n", inimigos[count].nomeInimigo, inimigos[count].forca, inimigos[count].hp, inimigos[count].defesa, inimigos[count].esquiva, inimigos[count].magia);
-
-
+    
+    
     /*printf("\nNome:    %s\n", inimigos[count].nomeInimigo);
     printf("Forca:   %d\n", inimigos[count].forca);
     printf("HP:      %d\n", inimigos[count].hp);
@@ -337,10 +339,10 @@ void printAtributosPersonagem (struct persona *atributoPersonagem){
     printf("\n----------------------- PERSONAGEM -----------------------\n\n");
     printf("Nome:         %s\n", atributoPersonagem->nomePersonagem);
     printf("Experiencia:  %d\n", atributoPersonagem->xp);
-    printf("Nivel:        %d\n", atributoPersonagem->nivel);
+    printf("Nivel:        %d\n\n", atributoPersonagem->nivel);
 
     printf("Forca: %d | HP %d | Esquiva: %d ", atributoPersonagem->raca.forca, atributoPersonagem->raca.hp, atributoPersonagem->raca.esquiva);
-    printf("| Inteligencia: %d | Magia: %d | Espirito: %d |\n", atributoPersonagem->classe.inteligencia, atributoPersonagem->classe.magia, atributoPersonagem->classe.espirito);
+    printf("Inteligencia: %d | Magia: %d | Espirito: %d |\n", atributoPersonagem->classe.inteligencia, atributoPersonagem->classe.magia, atributoPersonagem->classe.espirito);
 }
 
 //Função para upar o personagem
@@ -359,19 +361,19 @@ void upaPersonagem(struct persona *personagem)
 //Função para o menu de interação
 int menuInteracaoBatalha()
 {
-    int escolha;
+    int escolha; 
 
     printf("OPCOES: \n");
     printf("(1) Atacar\n");
     printf("(2) Fugir\n");
     printf("(3) Defender-se\n");
 
-    do
-    {
+    do 
+    {   
         scanf("%d", &escolha);
         if (escolha < 0 || escolha > 3)
         {
-           printf("\n\nValor invalido\nSomente valores os (1)(2)(3) sao aceitos \nDigite novamente...\n\n");
+           printf("\n\nValor invalido\nSomente valores os (1)(2)(3) sao aceitos \nDigite novamente...\n\n"); 
         }
     } while (escolha <= 0 || escolha > 3);
 
@@ -380,73 +382,82 @@ int menuInteracaoBatalha()
 
 //Função para quando personagem escolhe atacar
 void ataquePersonagem(struct persona *personagem, struct enemies *inimigos, int numInimigo, int dado)
-{
+{ 
+    if (dado == 1){
+        printf("Muito ruim, voce morreu!\n\n");
+        personagem->raca.hp = 0;
+    }  
+            else if (dado <= 5){
+                    printf("Voce eh azarado em, errou o ataque e ainda e ainda foi atacado!\n\n");
 
-    if (dado <= 5){
-            printf("Voce eh azarado em, errou o ataque e ainda e ainda foi atacado!");
-            ataqueMonstro(&personagem, &inimigos, numInimigo, dado);
-    }
-            else if (dado <= 10){
-                printf("Hmm, vamos testar seu espirito de luta é o suficiente para não desistir!\n\n");
-                system("pause");
-                if (personagem->classe.espirito > (dado + 10)){
-                    printf("Você demonstrou espirito nessa luta!, merece este ataque");
-                    danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
-                }
-                else{
-                    printf("Eh, voce ate pode ter se dedicado a treinamentos ou ser espertinho, mas quando o assunto eh espirito de luta, voce eh decepcionante!\n\n");
-                    ataqueMonstro(&personagem, &inimigos, numInimigo, dado);
-                }
-            }
-                    else if (dado <= 15){
-                        printf("Vamos la, voce tomou a diantera e agora sera recompensado!\n");
-                        danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
+                    if (personagem->raca.esquiva > (dado + 10)){
+                        printf("Sua esquiva esta em dia, desviou do ataque!\n\n");
                     }
-                            else if (dado < 20){
-                                printf("EITA! Vejo que voce esta pra poucos amigos!\n");
-                                danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
-                            }
-                                    else if (dado == 20){
-                                        printf("Meu deus, quem eh voce? Prevalecido, um golpe foi o que bastou para terminar essa luta!");
-                                        danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
-                                    }
+                    else {
+                        printf("Vamos ao dado novamente!\n\n");
+                        dado = rolagemDado();
+                        ataqueMonstro(&personagem, &inimigos, numInimigo, dado);
+                    } 
+            }
+                    else if (dado <= 10){
+                        printf("Hmm, vamos testar seu espirito de luta é o suficiente para não desistir!\n\n");
+                        system("pause");
 
+                        if (personagem->classe.espirito > (dado + 10)){
+                            printf("Você demonstrou espirito nessa luta!, merece este ataque");
+                            danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
+                        }
+                        else{
+                            printf("Eh, voce ate pode ter se dedicado a treinamentos ou ser espertinho, mas quando o assunto eh espirito de luta, voce eh decepcionante!\n\n");
+                            ataqueMonstro(&personagem, &inimigos, numInimigo, dado);
+                        }
+                    }
+                            else if (dado <= 15){
+                                printf("Vamos la, voce tomou a diantera e agora sera recompensado!\n");
+                                danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
+                            }   
+                                    else if (dado < 20){
+                                        printf("EITA! Vejo que voce esta pra poucos amigos!\n");
+                                        danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
+                                    }   
+                                            else if (dado == 20){
+                                                printf("Meu deus, quem eh voce? Provalecido, um golpe foi o que bastou para terminar essa luta!");
+                                                danoNoMonstro(&personagem, &inimigos, numInimigo, dado);
+                                            }
+                
 }
 
 //Função para quando teste indica que o monstro ataca
-void ataqueMonstro(struct persona *personagem, struct enemies *inimigo, int numInimigo, int dado)
+void ataqueMonstro(struct persona *personagem, struct enemies *inimigos, int numInimigo, int dado)
 {
-   if (personagem->raca.esquiva > (dado + 10)){
-       printf("Sua esquiva esta em dia, desviou do ataque!\n\n");
-   }
-
-   else if (dado <= 5){
-        printf("Foi quase em chefe mas mesmo assim tomou! \n\n");
-        // personagem.raca.hp - ataque do inimigo x1.15
+    if (dado == 1){
+        printf("Muito ruim, voce morreu!\n\n");
+        personagem->raca.hp = 0;
     }
-            else if (dado <= 10){
-                printf("Voce tenta desviar mas o inimigo ainda conseguiu acertar! \n\n");
-                // personagem.raca.hp - ataque do inimigo x1.3
+            else if (dado <= 5){
+                printf("Tentando desviar do ataque tu resbala e caiu no fundo de um buraco e virou uma presa facil!! \n\n");
+                personagem->raca.hp = personagem->raca.hp - (inimigos[numInimigo].forca + 5);
             }
-                    else if (dado <= 15){
-                        printf("Antes de comecar a fugir o inimigo te pega de surpresa! \n\n");
-                        // personagem.raca.hp - ataque do inimigo x1.5
-
+                    else if (dado <= 10){
+                        printf("Voce tenta desviar mas o inimigo ainda conseguiu acertar! \n\n");
+                        personagem->raca.hp = personagem->raca.hp - inimigos[numInimigo].forca;
                     }
-                            else if (dado < 20){
-                                printf("ih rapaiz tu nem viu chegando! \n\n");
-                                // personagem.raca.hp - ataque do inimigo x1.75
-
+                            else if (dado <= 15){
+                                printf("Apanhou, mas foi pouquinho!\n\n");
+                                personagem->raca.hp = (personagem->raca.hp + 5) - inimigos[numInimigo].forca;
                             }
-                                    else if (dado == 20){
-                                        printf("Tentando desviar do ataque tu resbala e caiu no fundo de um buraco e virou uma presa facil!! \n\n");
-                                        // personagem.raca.hp - ataque do inimigo x10
+                                    else if (dado < 20){
+                                        printf("Parece que voce desviou desse ataque!\n\n");
                                     }
+                                            else if (dado == 20){
+                                                printf("Seu maldito sortudo! Voce so nao desviou, como tambem atacou!\n\n");
+                                                danoNoMonstro(&personagem, &inimigos, numInimigo, 14);
+                                            }
 }
 
-//Runção que altera os atributos do monstro conforme o dano tomado
+//Runção que altera os atributos do monstro conforme o dano tomado 
 void danoNoMonstro(struct persona *personagem, struct enemies *inimigos, int numInimigo, int dado)
-{
+{  
     if (dado <= 10){
         if (personagem->classe.espirito > (dado + 10)){
              inimigos[numInimigo].hp = inimigos[numInimigo].hp - personagem->raca.forca;
@@ -454,12 +465,12 @@ void danoNoMonstro(struct persona *personagem, struct enemies *inimigos, int num
     }
             else if (dado <= 15){
                     inimigos[numInimigo].hp = inimigos[numInimigo].hp - personagem->raca.forca;
-                }
+                }   
                         else if (dado < 20){
                                 inimigos[numInimigo].hp = inimigos[numInimigo].hp - (personagem->raca.forca + 5);
-                            }
+                            }   
                                     else if (dado == 20){
-                                        inimigos[numInimigo].hp = 0;
+                                        inimigos[numInimigo].hp = 0;    
                                     }
 }
 
@@ -468,8 +479,8 @@ int rolagemDado()
 {
     int numeroDado;
     srand(time(NULL));
-
-    do{
+    
+    do{   
        numeroDado = rand() % 21;
     } while (numeroDado == 0);
 
@@ -481,10 +492,11 @@ int randInimigos(int quantInimigos)
 {
     int numeroDado;
     srand(time(NULL));
-
-    do{
+    
+    do{   
        numeroDado = rand() % quantInimigos;
     } while (numeroDado == 0);
 
     return numeroDado;
 }
+
